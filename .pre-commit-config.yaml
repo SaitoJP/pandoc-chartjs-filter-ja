@@ -9,15 +9,15 @@ repos:
     - id: end-of-file-fixer
 - repo: local
   hooks:
-    - id: npm-prettier
-      name: prettier
-      description: Runs prettier using npm
-      entry: npm run prettier
+    - id: npm-format
+      name: format
+      description: Runs the formatting script as specified in package.json
+      entry: npm run format
       language: node
       files: \.ts$
-    - id: npm-tslint
-      name: tslint
-      description: Runs tslint using npm
-      entry: npm run tslint
+    - id: npm-lint
+      name: lint
+      description: Runs the linting script as specified in package.json
+      entry: npm run lint
       language: node
       files: \.ts$
