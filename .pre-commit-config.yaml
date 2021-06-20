@@ -1,0 +1,23 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v2.3.0
+  hooks:
+    - id: check-yaml
+      files: \.ya?ml$
+    - id: end-of-file-fixer
+- repo: local
+  hooks:
+    - id: npm-prettier
+      name: prettier
+      description: Runs prettier using npm
+      entry: npm run prettier
+      language: node
+      files: \.ts$
+    - id: npm-tslint
+      name: tslint
+      description: Runs tslint using npm
+      entry: npm run tslint
+      language: node
+      files: \.ts$
