@@ -11,9 +11,13 @@
     "lint": "tslint -p tsconfig.json -c tslintconfig.json"
   },
   "bin": {
-    "pandoc-chartjs-filter": "dist/pandoc-chartjs-filter.js"
+    "pandoc-chartjs-filter": "bin/pandoc-chartjs-filter.sh"
   },
-  "keywords": [],
+  "keywords": [
+    "pandoc",
+    "filter",
+    "chartjs"
+  ],
   "author": "Friedrich Kurz <friedrich.kurz@live.com> (https://github.com/fkurz/)",
   "license": "ISC",
   "devDependencies": {
