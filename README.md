@@ -1,17 +1,6 @@
 # pandoc-chartjs-filter
 
-## Setup
+## About
+A simple [Pandoc](https://pandoc.org/) filter that can be used to generate images from [chart.js](https://www.chartjs.org/) chart specs.
 
-TODO 
-
-```bash
-npm run build
-export PATH="${PATH}:${PWD}build"
-pandoc --filter pandoc-chartjs-filter ...
-```
-
-## Contributing
-
-```bash
-pre-commit install
-```
+Visit the [docs](./docs/README.md) for additional information.
