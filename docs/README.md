@@ -13,6 +13,11 @@ $ which pandoc-chartjs-filter
 /Users/main/.nvm/versions/node/v14.17.2/bin/pandoc-chartjs-filter
 ```
 
+You can also generate example outputs by running
+```bash
+make examples
+```
+
 ## Usage
 Our _pandoc-chartjs-filter_ expects a [fenced code block](https://www.markdownguide.org/extended-syntax/#fenced-code-blocks) with class _chart_ that contains a chart.js chart specification object in YAML format.
 Take a look at the [line chart example](./../examples/line-chart.md) in the examples directory and the chart.js docs for additional information.
@@ -49,7 +54,7 @@ will install the filter locally for tests.
 
 ## Examples
 
-After building and installing the filter, run `make examples` to build the examples and export them to `examples/`
+After building and installing the filter, run `make examples` to build the examples and export them to `dist/examples/`
 
 The output should contain be a single page PDF looking similar to this
 
