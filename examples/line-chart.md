@@ -1,5 +1,7 @@
 # Line Chart Example
 
+A very simple example using the default parameter and a line chart spec.
+
 See [chart.js line chart docs](https://www.chartjs.org/docs/latest/charts/line.html) for reference.
 
 ```chart
