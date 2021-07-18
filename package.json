@@ -1,5 +1,5 @@
 {
-  "name": "pandoc-chartjs-filter",
+  "name": "@fkurz/pandoc-chartjs-filter",
   "version": "1.2.0",
   "description": "",
   "main": "index.js",
