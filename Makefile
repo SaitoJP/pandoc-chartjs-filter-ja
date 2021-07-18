@@ -1,14 +1,13 @@
 .PHONY : clean
 clean:
-	rm -rf dist && \
-	rm -rf bin && \
-	mkdir -p dist/examples && \
-	mkdir -p bin 
+	rm -rf dist bin node_modules && \
+	mkdir -p dist/examples bin 
 
 # TODO not phony?
 .PHONY : build
 build:
 	make clean && \
+	npm install && \
 	npm run build && \
 	sed -e '1s|^|#!/usr/bin/env node\n|' dist/pandoc-chartjs-filter.js > bin/pandoc-chartjs-filter.sh
 
