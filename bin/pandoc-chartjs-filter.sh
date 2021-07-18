@@ -36,33 +36,79 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var pandoc_filter_1 = require("pandoc-filter");
 var yaml_1 = require("yaml");
+var fs_1 = __importDefault(require("fs"));
+var chartjs_node_canvas_1 = require("chartjs-node-canvas");
+var uuid_1 = require("uuid");
 var CHART_CODE_BLOCK_TAG = 'chart';
 var isChartCodeBlock = function (_a) {
     var id = _a[0], classes = _a[1], keyVal = _a[2];
     return (id === CHART_CODE_BLOCK_TAG || (classes.length === 1 && classes[0] === CHART_CODE_BLOCK_TAG));
 };
-var QUICK_CHART_CHART_ENDPOINT = 'https://quickchart.io/chart';
-var constructQuickChartImageUrl = function (chartSpec) {
-    return QUICK_CHART_CHART_ENDPOINT + "?c=" + encodeURIComponent(JSON.stringify(chartSpec));
+var getMetadata = function (attr) {
+    var attrList = attr[2];
+    var metadataRaw = attrList.reduce(function (result, _a) {
+        var key = _a[0], value = _a[1];
+        result[key] = value;
+        return result;
+    }, {});
+    var metadata = {};
+    // TODO FK magic numbers/strings to default values (metadata default)
+    metadata.width = typeof metadataRaw.width !== 'undefined' ? parseInt(metadataRaw.width) || 400 : 400;
+    metadata.height = typeof metadataRaw.height !== 'undefined' ? parseInt(metadataRaw.height) || 400 : 400;
+    metadata.out = metadataRaw.out || ".";
+    return metadata;
+};
+var generateChartImageBySpec = function (_a, chartSpec) {
+    var width = _a.width, height = _a.height, out = _a.out;
+    return __awaiter(void 0, void 0, void 0, function () {
+        var canvas, imageUri, stream;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    canvas = new chartjs_node_canvas_1.ChartJSNodeCanvas({ width: width, height: height });
+                    imageUri = out + "/chart-" + uuid_1.v4() + ".png";
+                    return [4 /*yield*/, canvas.renderToStream(chartSpec)
+                            .pipe(fs_1.default.createWriteStream(imageUri))];
+                case 1:
+                    stream = _b.sent();
+                    return [2 /*return*/, imageUri];
+            }
+        });
+    });
 };
 var chartJsFilter = function (element) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, attr, codeBlockText, chartSpec, quickQuartImageUrl, inlineElements;
-    return __generator(this, function (_b) {
-        switch (element.t) {
-            case 'CodeBlock':
-                _a = element.c, attr = _a[0], codeBlockText = _a[1];
+    var _a, _b, attr, codeBlockText, metadata, chartSpec, imageUri, inlineElements;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
+            case 0:
+                _a = element.t;
+                switch (_a) {
+                    case 'CodeBlock': return [3 /*break*/, 1];
+                }
+                return [3 /*break*/, 3];
+            case 1:
+                _b = element.c, attr = _b[0], codeBlockText = _b[1];
                 if (!isChartCodeBlock(attr)) {
                     return [2 /*return*/];
                 }
+                metadata = getMetadata(attr);
                 chartSpec = yaml_1.parse(codeBlockText);
-                quickQuartImageUrl = constructQuickChartImageUrl(chartSpec);
-                inlineElements = [pandoc_filter_1.Image(['', [], []], [], [quickQuartImageUrl, ''])];
+                return [4 /*yield*/, generateChartImageBySpec(metadata, chartSpec)
+                        .catch(function (e) {
+                        return 'https://dummyimage.com/600x400/ffffff/f00000&text=ERROR';
+                    })];
+            case 2:
+                imageUri = _c.sent();
+                inlineElements = [pandoc_filter_1.Image(['', [], []], [], [imageUri, ''])];
                 return [2 /*return*/, pandoc_filter_1.Para(inlineElements)];
+            case 3: return [2 /*return*/];
         }
-        return [2 /*return*/];
     });
 }); };
 pandoc_filter_1.stdio(chartJsFilter);
