@@ -50,6 +50,9 @@ var isChartCodeBlock = function (_a) {
     var id = _a[0], classes = _a[1], keyVal = _a[2];
     return (id === CHART_CODE_BLOCK_TAG || (classes.length === 1 && classes[0] === CHART_CODE_BLOCK_TAG));
 };
+var DEFAULT_WIDTH = 400;
+var DEFAULT_HEIGHT = DEFAULT_WIDTH;
+var DEFAULT_OUT = '.';
 var getMetadata = function (attr) {
     var attrList = attr[2];
     var metadataRaw = attrList.reduce(function (result, _a) {
@@ -59,9 +62,15 @@ var getMetadata = function (attr) {
     }, {});
     var metadata = {};
     // TODO FK magic numbers/strings to default values (metadata default)
-    metadata.width = typeof metadataRaw.width !== 'undefined' ? parseInt(metadataRaw.width) || 400 : 400;
-    metadata.height = typeof metadataRaw.height !== 'undefined' ? parseInt(metadataRaw.height) || 400 : 400;
-    metadata.out = metadataRaw.out || ".";
+    metadata.width =
+        typeof metadataRaw.width !== 'undefined'
+            ? parseInt(metadataRaw.width, 10) || DEFAULT_WIDTH
+            : DEFAULT_WIDTH;
+    metadata.height =
+        typeof metadataRaw.height !== 'undefined'
+            ? parseInt(metadataRaw.height, 10) || DEFAULT_HEIGHT
+            : DEFAULT_HEIGHT;
+    metadata.out = metadataRaw.out || DEFAULT_OUT;
     return metadata;
 };
 var generateChartImageBySpec = function (_a, chartSpec) {
@@ -73,8 +82,7 @@ var generateChartImageBySpec = function (_a, chartSpec) {
                 case 0:
                     canvas = new chartjs_node_canvas_1.ChartJSNodeCanvas({ width: width, height: height });
                     imageUri = out + "/chart-" + uuid_1.v4() + ".png";
-                    return [4 /*yield*/, canvas.renderToStream(chartSpec)
-                            .pipe(fs_1.default.createWriteStream(imageUri))];
+                    return [4 /*yield*/, canvas.renderToStream(chartSpec).pipe(fs_1.default.createWriteStream(imageUri))];
                 case 1:
                     stream = _b.sent();
                     return [2 /*return*/, imageUri];
@@ -99,8 +107,7 @@ var chartJsFilter = function (element) { return __awaiter(void 0, void 0, void 0
                 }
                 metadata = getMetadata(attr);
                 chartSpec = yaml_1.parse(codeBlockText);
-                return [4 /*yield*/, generateChartImageBySpec(metadata, chartSpec)
-                        .catch(function (e) {
+                return [4 /*yield*/, generateChartImageBySpec(metadata, chartSpec).catch(function (e) {
                         return 'https://dummyimage.com/600x400/ffffff/f00000&text=ERROR';
                     })];
             case 2:
