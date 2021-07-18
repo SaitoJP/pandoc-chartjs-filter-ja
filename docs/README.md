@@ -1,6 +1,6 @@
 ## Setup
 
-To install the filter locally, run
+To make a clean build and install the filter locally, run
 ```bash
 make build
 npm install -g .
@@ -15,8 +15,18 @@ $ which pandoc-chartjs-filter
 
 ## Usage
 Our _pandoc-chartjs-filter_ expects a [fenced code block](https://www.markdownguide.org/extended-syntax/#fenced-code-blocks) with class _chart_ that contains a chart.js chart specification object in YAML format.
-
 Take a look at the [line chart example](./../examples/line-chart.md) in the examples directory and the chart.js docs for additional information.
+
+Metadata width, height, and output directory can be passed using the extended syntax for fenced blocks. E.g. 
+~~~markdown
+  ```{#chart width=800 height=600 out=/tmp}
+  type: bar
+  data:
+    labels: [January, February, March, April, May, June, July]
+  …
+  ```
+~~~
+The [bar chart example](./../examples/bar-chart.md) contains an example for this.
 
 ## Contributing
 
@@ -39,16 +49,12 @@ will install the filter locally for tests.
 
 ## Examples
 
-After building and installing the filter, run e.g.
-```bash
-pandoc --from markdown --to pdf examples/line-chart.md --filter pandoc-chartjs-filter > /tmp/line-chart.pdf
-```
-Note that we pass _pandoc-chartjs-filter_ as an additional filter using the _--filter_ option.
+After building and installing the filter, run `make examples` to build the examples and export them to `examples/`
 
-The result should be a single page PDF looking similar to this
+The output should contain be a single page PDF looking similar to this
 
 > ![line chart example PDF output](./../assets/line-chart-example.png) 
 
 ## Acknowledgements
 
-Thanks to the makers of [quickchart.io](https://quickchart.io/) and the [pandoc-filter-node](https://github.com/mvhenderson/pandoc-filter-node) package.
+Thanks to the makers of [Chart.js](https://www.chartjs.org/), **Mike Henderson** for the [pandoc-filter-node](https://github.com/mvhenderson/pandoc-filter-node), and **Sean Sobey** for the [_chartjs-node-canvas_ package](https://github.com/SeanSobey/ChartjsNodeCanvas) 
