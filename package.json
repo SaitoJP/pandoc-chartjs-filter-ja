@@ -1,6 +1,6 @@
 {
   "name": "pandoc-chartjs-filter",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "A Pandoc filter that generates Chart.js charts and embeds them as images",
   "main": "src/pandoc-chartjs-filter.ts",
   "directories": {
