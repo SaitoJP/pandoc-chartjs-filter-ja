@@ -1,8 +1,12 @@
 {
-  "name": "@fkurz/pandoc-chartjs-filter",
+  "name": "pandoc-chartjs-filter",
   "version": "1.2.1",
-  "description": "",
-  "main": "index.js",
+  "description": "A Pandoc filter that generates Chart.js charts and embeds them as images",
+  "main": "src/pandoc-chartjs-filter.ts",
+  "directories": {
+    "doc": "docs",
+    "example": "examples"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node src/main.ts",
@@ -13,17 +17,29 @@
   "bin": {
     "pandoc-chartjs-filter": "bin/pandoc-chartjs-filter.sh"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fkurz/pandoc-chartjs-filter.git"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://registry.npmjs.org/"
+  },
   "keywords": [
-    "pandoc",
+    "Pandoc",
+    "Chart.js",
     "filter",
-    "chartjs"
+    "chart",
+    "image"
   ],
   "author": "Friedrich Kurz <friedrich.kurz@live.com> (https://github.com/fkurz/)",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fkurz/pandoc-chartjs-filter/issues"
+  },
+  "homepage": "https://github.com/fkurz/pandoc-chartjs-filter#readme",
   "devDependencies": {
-    "@types/chart.js": "^2.9.34",
     "@types/node": "^15.14.2",
-    "@types/selenium-webdriver": "^4.0.15",
     "@types/uuid": "^8.3.1",
     "prettier": "^1.7.4",
     "ts-node": "^10.0.0",
@@ -33,7 +49,6 @@
   "dependencies": {
     "chart.js": "^2.9.4",
     "chartjs-node-canvas": "^3.2.0",
-    "install": "^0.13.0",
     "pandoc-filter": "^2.0.2",
     "uuid": "^8.3.2",
     "yaml": "^1.10.2"
