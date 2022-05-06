@@ -73,6 +73,8 @@ var getMetadata = function (attr) {
     metadata.out = metadataRaw.out || DEFAULT_OUT;
     return metadata;
 };
+var FONT_PATH = process.env.PANDOC_CHARTJS_FILTER_FONT_PATH;
+var FONT_NAME = process.env.PANDOC_CHARTJS_FILTER_FONT_NAME;
 var generateChartImageBySpec = function (_a, chartSpec) {
     var width = _a.width, height = _a.height, out = _a.out;
     return __awaiter(void 0, void 0, void 0, function () {
@@ -80,7 +82,18 @@ var generateChartImageBySpec = function (_a, chartSpec) {
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    canvas = new chartjs_node_canvas_1.ChartJSNodeCanvas({ width: width, height: height });
+                    canvas = new chartjs_node_canvas_1.ChartJSNodeCanvas({
+                        width: width,
+                        height: height,
+                        chartCallback: function (ChartJS) {
+                            if (FONT_NAME) {
+                                ChartJS.defaults.global.defaultFontFamily = FONT_NAME;
+                            }
+                        }
+                    });
+                    if (FONT_PATH && FONT_NAME) {
+                        canvas.registerFont(FONT_PATH, { family: FONT_NAME });
+                    }
                     imageUri = out + "/chart-" + uuid_1.v4() + ".png";
                     return [4 /*yield*/, canvas.renderToStream(chartSpec).pipe(fs_1.default.createWriteStream(imageUri))];
                 case 1:

@@ -46,11 +46,24 @@ const getMetadata = (attr: Attr): ChartMetadata => {
   return metadata
 }
 
+const FONT_PATH = process.env.PANDOC_CHARTJS_FILTER_FONT_PATH;
+const FONT_NAME = process.env.PANDOC_CHARTJS_FILTER_FONT_NAME;
 const generateChartImageBySpec = async (
   { width, height, out }: ChartMetadata,
   chartSpec: any
 ): Promise<string> => {
-  const canvas = new ChartJSNodeCanvas({ width, height })
+  const canvas = new ChartJSNodeCanvas({
+    width,
+    height,
+    chartCallback: (ChartJS) => {
+      if (FONT_NAME) {
+        ChartJS.defaults.global.defaultFontFamily = FONT_NAME;
+      }
+    }
+  })
+  if (FONT_PATH && FONT_NAME) {
+    canvas.registerFont(FONT_PATH, { family: FONT_NAME });
+  }
 
   const imageUri = `${out}/chart-${uuidv4()}.png`
   const stream = await canvas.renderToStream(chartSpec).pipe(fs.createWriteStream(imageUri))

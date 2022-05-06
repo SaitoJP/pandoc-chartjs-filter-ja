@@ -1,5 +1,11 @@
 ## Setup
 
+- Set the environment variable.
+  - `PANDOC_CHARTJS_FILTER_FONT_PATH` to the font path.
+  - `PANDOC_CHARTJS_FILTER_FONT_NAME` to the font name.
+
+---
+
 To make a clean build and install the filter locally, run
 ```bash
 make build

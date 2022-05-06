@@ -7,7 +7,7 @@ See [chart.js bar chart docs](https://www.chartjs.org/docs/latest/charts/bar.htm
 ```{#chart width=800 height=600 out=/tmp}
 type: bar
 data:
-  labels: [January, February, March, April, May, June, July]
+  labels: [１月, ２月, ３月, ４月, ５月, ６月, ７月]
   datasets:
   - label: My First Dataset
     data: [65, 59, 80, 81, 56, 55, 40]
