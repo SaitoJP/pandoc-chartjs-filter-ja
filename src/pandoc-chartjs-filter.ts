@@ -2,6 +2,7 @@ import { Para, Image, AnyElt, Elt, FilterActionAsync, stdio, Attr } from 'pandoc
 // import { parse as parseYaml } from 'yaml'
 import fs from 'fs'
 import { ChartJSNodeCanvas } from 'chartjs-node-canvas'
+import ChartDataLabels from 'chartjs-plugin-datalabels'
 import { v4 as uuidv4 } from 'uuid'
 
 const CHART_CODE_BLOCK_TAG = 'chart'
@@ -59,6 +60,8 @@ const generateChartImageBySpec = async (
       if (FONT_NAME) {
         ChartJS.defaults.global.defaultFontFamily = FONT_NAME;
       }
+
+      ChartJS.plugins.register(ChartDataLabels);
     }
   })
   if (FONT_PATH && FONT_NAME) {

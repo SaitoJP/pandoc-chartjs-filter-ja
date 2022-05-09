@@ -44,6 +44,7 @@ var pandoc_filter_1 = require("pandoc-filter");
 // import { parse as parseYaml } from 'yaml'
 var fs_1 = __importDefault(require("fs"));
 var chartjs_node_canvas_1 = require("chartjs-node-canvas");
+var chartjs_plugin_datalabels_1 = __importDefault(require("chartjs-plugin-datalabels"));
 var uuid_1 = require("uuid");
 var CHART_CODE_BLOCK_TAG = 'chart';
 var isChartCodeBlock = function (_a) {
@@ -89,6 +90,7 @@ var generateChartImageBySpec = function (_a, chartSpec) {
                             if (FONT_NAME) {
                                 ChartJS.defaults.global.defaultFontFamily = FONT_NAME;
                             }
+                            ChartJS.plugins.register(chartjs_plugin_datalabels_1.default);
                         }
                     });
                     if (FONT_PATH && FONT_NAME) {
