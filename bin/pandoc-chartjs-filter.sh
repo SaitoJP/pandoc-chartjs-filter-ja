@@ -41,7 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var pandoc_filter_1 = require("pandoc-filter");
-var yaml_1 = require("yaml");
+// import { parse as parseYaml } from 'yaml'
 var fs_1 = __importDefault(require("fs"));
 var chartjs_node_canvas_1 = require("chartjs-node-canvas");
 var uuid_1 = require("uuid");
@@ -119,7 +119,7 @@ var chartJsFilter = function (element) { return __awaiter(void 0, void 0, void 0
                     return [2 /*return*/];
                 }
                 metadata = getMetadata(attr);
-                chartSpec = yaml_1.parse(codeBlockText);
+                chartSpec = eval("(" + codeBlockText + ")");
                 return [4 /*yield*/, generateChartImageBySpec(metadata, chartSpec).catch(function (e) {
                         return 'https://dummyimage.com/600x400/ffffff/f00000&text=ERROR';
                     })];

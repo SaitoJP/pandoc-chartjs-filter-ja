@@ -1,5 +1,5 @@
 import { Para, Image, AnyElt, Elt, FilterActionAsync, stdio, Attr } from 'pandoc-filter'
-import { parse as parseYaml } from 'yaml'
+// import { parse as parseYaml } from 'yaml'
 import fs from 'fs'
 import { ChartJSNodeCanvas } from 'chartjs-node-canvas'
 import { v4 as uuidv4 } from 'uuid'
@@ -80,7 +80,8 @@ const chartJsFilter: FilterActionAsync = async (element: AnyElt) => {
       }
 
       const metadata = getMetadata(attr)
-      const chartSpec = parseYaml(codeBlockText)
+      // const chartSpec = parseYaml(codeBlockText)
+      const chartSpec = eval(`(${codeBlockText})`)
 
       const imageUri = await generateChartImageBySpec(metadata, chartSpec).catch(e => {
         return 'https://dummyimage.com/600x400/ffffff/f00000&text=ERROR'

@@ -25,16 +25,17 @@ make examples
 ```
 
 ## Usage
-Our _pandoc-chartjs-filter_ expects a [fenced code block](https://www.markdownguide.org/extended-syntax/#fenced-code-blocks) with class _chart_ that contains a chart.js chart specification object in YAML format.
+Our _pandoc-chartjs-filter_ expects a [fenced code block](https://www.markdownguide.org/extended-syntax/#fenced-code-blocks) with class _chart_ that contains a chart.js chart specification object in Object(JSON) format.
 Take a look at the [line chart example](./../examples/line-chart.md) in the examples directory and the chart.js docs for additional information.
 
 Metadata width, height, and output directory can be passed using the extended syntax for fenced blocks. E.g. 
 ~~~markdown
   ```{#chart width=800 height=600 out=/tmp}
-  type: bar
-  data:
-    labels: [January, February, March, April, May, June, July]
-  …
+  {
+    type: "bar",
+    data: {
+      labels: ["January", "February", "March", "April", "May", "June", "July"]
+    …
   ```
 ~~~
 The [bar chart example](./../examples/bar-chart.md) contains an example for this.
